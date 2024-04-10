@@ -1,0 +1,33 @@
+body{
+    background-color: #666;
+    color: #6b6;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#gamefield{
+    border: 1px solid chartreuse;
+    width: fit-content;
+    display: grid;
+}
+
+#background{
+    grid-area: 1 / 1;
+    width: calc(16 * 32px);
+    height: calc(12 * 32px);
+}
+
+#items{
+    grid-area: 1 / 1;
+}
+
+#characters{
+    grid-area: 1 / 1;
+}
+
+#player{
+    width: 32px;
+    aspect-ratio: 16 / 20;
+    background-image: url('images/Characters/Character 11.png');
+    background-size: 400% 400%;
+    image-rendering: pixelated;
+}
