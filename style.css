@@ -31,3 +31,65 @@ body{
     background-size: 400% 400%;
     image-rendering: pixelated;
 }
+
+#player.animate {
+    animation-duration: 0.7s;
+    animation-timing-function: steps(4);
+    animation-iteration-count: infinite;
+}
+
+#player.down{
+    background-position: 0% 0%;
+    animation-name: down;
+}
+
+#player.up{
+    background-position: 0% -100%;
+    animation-name: up;
+}
+
+#player.left{
+    background-position: 0% -200%;
+    animation-name: left;
+}
+
+#player.right{
+    background-position: 0% -300%;
+    animation-name: right;
+}
+
+@keyframes down {
+    form {
+        background-position: 0% 0%;
+    }
+    to {
+        background-position: -400% 0%;
+    }
+}
+
+@keyframes up {
+    form {
+        background-position: 0% -100%;
+    }
+    to {
+        background-position: -400% -100%;
+    }
+}
+
+@keyframes left {
+    form {
+        background-position: 0% -200%;
+    }
+    to {
+        background-position: -400% -200%;
+    }
+}
+
+@keyframes right {
+    form {
+        background-position: 0% -300%;
+    }
+    to {
+        background-position: -400% -300%;
+    }
+}
