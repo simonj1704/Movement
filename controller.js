@@ -28,27 +28,45 @@ function tick(timestamp){
 function movePlayer(deltatime){
     player.moving = false;
 
+    const newPos = {
+        x: player.x,
+        y: player.y
+    }
+
     if(controls.up){
         player.moving = true;
         player.direction = "up";
-        player.y -= player.speed * deltatime;
+        newPos.y -= player.speed * deltatime;
     }
     if(controls.down){
         player.moving = true;
         player.direction = "down";
-        player.y += player.speed * deltatime;
+        newPos.y += player.speed * deltatime;
     }
     if(controls.left){
         player.moving = true;
         player.direction = "left";
-        player.x -= player.speed * deltatime;
+        newPos.x -= player.speed * deltatime;
     }
     if(controls.right){
         player.moving = true;
         player.direction = "right";
-        player.x += player.speed * deltatime;
+        newPos.x += player.speed * deltatime;
     }
 
+    if(canMoveTo(newPos)){
+        player.x = newPos.x;
+        player.y = newPos.y;
+    }
+
+}
+
+function canMoveTo(pos){
+    if(pos.x < 0 || pos.x > 484 ||
+       pos.y < 0 || pos.y > 340){
+        return false;
+    }
+    return true;
 }
 
 
@@ -77,8 +95,11 @@ function displayPlayerAnimation(){
 
     if(player.moving){
         visualPlayer.classList.add("animate");
-        visualPlayer.classList.remove("up", "down", "left", "right");
-        visualPlayer.classList.add(player.direction);
+        if(!visualPlayer.classList.contains(player.direction)){
+            visualPlayer.classList.remove("up", "down", "left", "right");
+            visualPlayer.classList.add(player.direction);
+
+        }
     } else {
         visualPlayer.classList.remove("animate");
     }
