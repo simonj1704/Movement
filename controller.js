@@ -57,6 +57,27 @@ function movePlayer(deltatime){
     if(canMoveTo(newPos)){
         player.x = newPos.x;
         player.y = newPos.y;
+    } else {
+        player.moving = false;
+        if(newPos.x !== player.x && newPos.y !== player.y){
+            const newXpos = {
+                x: newPos.x,
+                y: player.y
+            }
+            const newYpos = {
+                x: player.x,
+                y: newPos.y
+            
+            }
+
+            if(canMoveTo(newXpos)){
+                player.moving = true;
+                player.x = newXpos.x;
+            } else if(canMoveTo(newYpos)){
+                player.moving = true;
+                player.y = newYpos.y;
+            }
+        }
     }
 
 }
@@ -93,16 +114,18 @@ function displayPlayerposition(){
 function displayPlayerAnimation(){
     const visualPlayer = document.querySelector("#player");
 
-    if(player.moving){
-        visualPlayer.classList.add("animate");
-        if(!visualPlayer.classList.contains(player.direction)){
-            visualPlayer.classList.remove("up", "down", "left", "right");
-            visualPlayer.classList.add(player.direction);
+    if(player.direction && !visualPlayer.classList.contains(player.direction)){
+        visualPlayer.classList.remove("up", "down", "left", "right");
+        visualPlayer.classList.add(player.direction);
 
-        }
-    } else {
-        visualPlayer.classList.remove("animate");
     }
+    
+    if (!player.moving){
+        visualPlayer.classList.remove("animate");
+    } else if (!visualPlayer.classList.contains("animate")){
+        visualPlayer.classList.add("animate");
+    }
+
 }
 
 
