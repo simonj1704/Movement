@@ -36,23 +36,40 @@ function movePlayer(deltatime){
     if(controls.up){
         player.moving = true;
         player.direction = "up";
-        newPos.y -= player.speed * deltatime;
+        player.speed += player.acceleration * deltatime;
     }
     if(controls.down){
         player.moving = true;
         player.direction = "down";
-        newPos.y += player.speed * deltatime;
+        player.speed += player.acceleration * deltatime;
     }
     if(controls.left){
         player.moving = true;
         player.direction = "left";
-        newPos.x -= player.speed * deltatime;
+        player.speed += player.acceleration * deltatime;
     }
     if(controls.right){
         player.moving = true;
         player.direction = "right";
-        newPos.x += player.speed * deltatime;
+        player.speed += player.acceleration * deltatime;
     }
+
+    if(player.speed > 0){
+      if(controls.up){
+        newPos.y -= player.speed * deltatime;
+      }
+      if(controls.down){
+        newPos.y += player.speed * deltatime;
+      }
+      if(controls.left){
+        newPos.x -= player.speed * deltatime;
+      }
+      if(controls.right){
+        newPos.x += player.speed * deltatime;
+      }
+    }
+
+    player.speed = Math.min(player.speed, player.topspeed);
 
     if(canMoveTo(newPos)){
         player.x = newPos.x;
@@ -75,11 +92,21 @@ function movePlayer(deltatime){
                 player.x = newXpos.x;
             } else if(canMoveTo(newYpos)){
                 player.moving = true;
+                if(player.y < newPos.y){
+                  player.direction = "down";
+                } else {
+                  player.direction = "up";
+                }
                 player.y = newYpos.y;
+
             }
         }
     }
 
+    if(!player.moving){
+      player.speed -= player.acceleration * deltatime + 10;
+    }
+    player.speed = Math.max(player.speed, 0);
 }
 
 function canMoveTo(pos){
@@ -94,7 +121,9 @@ function canMoveTo(pos){
 const player = {
     x: 0,
     y: 0,
-    speed: 120,
+    speed: 0,
+    topspeed: 120,
+    acceleration: 120,
     moving: false,
     direction: undefined
 }
